@@ -76,14 +76,15 @@ public class AeroplofFlightBooker implements FlightBooker {
 	 * @return                         List of concrete flights
 	 */
 	public List<ConcreteFlight> getMatchingConFlights(String intendedDepartureCity,
-			String intendedArrivalCity, Date intendedDate) {
+			String intendedArrivalCity, Date intendedDate, String fare, int ticketsNum ) {
 
 		List<ConcreteFlight> matchingConFlights = new ArrayList<ConcreteFlight>();
 
 		for (Flight fli : availableFlights) {
 			if (fli.getArrivalCity().equals(intendedArrivalCity) &&
-					fli.getDepartureCity().equals(intendedDepartureCity))
-				matchingConFlights.addAll(fli.getConcreteFlights(intendedDate));
+					fli.getDepartureCity().equals(intendedDepartureCity)
+				)
+				matchingConFlights.addAll(fli.getConcreteFlights(intendedDate, fare, ticketsNum));
 		}
 
 		return matchingConFlights;
@@ -96,8 +97,8 @@ public class AeroplofFlightBooker implements FlightBooker {
 	 * @return				The number of remaining free seats for this fare after
 	 * 						the booking, or -1 if no available seat to book
 	 */
-	public int bookSeat(ConcreteFlight conFli, String fare) {
-		return conFli.allocateSeat(fare, 1);
+	public int bookSeat(ConcreteFlight conFli, String fare, int ticketsNum) {
+		return conFli.allocateSeat(fare, ticketsNum);
 	}
 
 }

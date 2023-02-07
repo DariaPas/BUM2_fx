@@ -3,6 +3,7 @@ package eus.ehu.domain;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Flight
@@ -69,11 +70,19 @@ public class Flight {
 	}
 
 
-	public ArrayList<ConcreteFlight> getConcreteFlights(Date date) {
+	public ArrayList<ConcreteFlight> getConcreteFlights(Date date, String fare, int ticketsNum) {
 		ArrayList<ConcreteFlight> lInDate = new ArrayList<ConcreteFlight>();
 		for (ConcreteFlight cfl : concreteFlights) {
-			if (date.equals(cfl.getDate()))
+
+			if (date.equals(cfl.getDate()) && Objects.equals(fare, "First") && cfl.getFreeFirstSeatNo() >= ticketsNum) {
 				lInDate.add(cfl);
+			}
+			else if (date.equals(cfl.getDate()) && Objects.equals(fare, "Business") && cfl.getFreeBusinessSeatNo() >=  ticketsNum) {
+				lInDate.add(cfl);
+			}
+			else if (date.equals(cfl.getDate()) && Objects.equals(fare, "Economy") && cfl.getFreeEconomySeatNo() >=  ticketsNum) {
+				lInDate.add(cfl);
+			}
 		}
 		return lInDate;
 	}
